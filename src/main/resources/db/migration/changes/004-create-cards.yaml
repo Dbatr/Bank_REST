@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-cards
+      author: denis
+      changes:
+        - createTable:
+            tableName: cards
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: card_number
+                  type: VARCHAR(2048)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: owner_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expiry_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance
+                  type: NUMERIC(19,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: UUID
+        - addForeignKeyConstraint:
+            constraintName: fk_cards_user
+            baseTableName: cards
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: SET NULL

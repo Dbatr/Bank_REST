@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-create-transactions
+      author: denis
+      changes:
+        - createTable:
+            tableName: transactions
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: from_card_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_card_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: NUMERIC(19,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: performed_by_user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_transactions_from_card
+            baseTableName: transactions
+            baseColumnNames: from_card_id
+            referencedTableName: cards
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            constraintName: fk_transactions_to_card
+            baseTableName: transactions
+            baseColumnNames: to_card_id
+            referencedTableName: cards
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            constraintName: fk_transactions_performed_by
+            baseTableName: transactions
+            baseColumnNames: performed_by_user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE

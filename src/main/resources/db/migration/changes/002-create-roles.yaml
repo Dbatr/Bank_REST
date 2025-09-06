@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-roles
+      author: denis
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
