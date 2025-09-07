@@ -39,7 +39,7 @@ public class User {
     /**
      * Полное имя пользователя.
      */
-    @Column(nullable = false)
+    @Column(name = "full_name", nullable = false)
     private String fullName;
 
     /**

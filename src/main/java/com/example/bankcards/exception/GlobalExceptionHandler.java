@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.security.core.AuthenticationException;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +26,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex) {
         var error = new ErrorResponse("INTERNAL_SERVER", ex.getMessage(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationException() {
+        var error = new ErrorResponse("UNAUTHORIZED", "Неверные учетные данные пользователя", LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 
 }

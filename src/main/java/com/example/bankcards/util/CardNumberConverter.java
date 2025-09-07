@@ -19,7 +19,7 @@ import java.util.Base64;
  * Используется AES в режиме GCM (без паддинга).
  */
 @Component
-@Converter(autoApply = true)
+@Converter
 public class CardNumberConverter implements AttributeConverter<String, String> {
 
     private static final String ALG = "AES/GCM/NoPadding";

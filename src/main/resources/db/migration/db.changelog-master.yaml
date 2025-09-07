@@ -9,3 +9,9 @@ databaseChangeLog:
       file: db/migration/changes/004-create-cards.yaml
   - include:
       file: db/migration/changes/005-create-transactions.yaml
+  - include:
+      file: db/migration/changes/006-insert-roles.yaml
+  - include:
+      file: db/migration/changes/007-insert-users.yaml
+  - include:
+      file: db/migration/changes/008-insert-user-roles.yaml
