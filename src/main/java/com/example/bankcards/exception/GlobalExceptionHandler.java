@@ -28,10 +28,29 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
+    /**
+     * Обрабатывает исключения аутентификации.
+     * Вызывается при неверных учетных данных пользователя.
+     *
+     * @return ResponseEntity с объектом ErrorResponse и статусом HTTP 401 (Unauthorized)
+     */
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponse> handleAuthenticationException() {
         var error = new ErrorResponse("UNAUTHORIZED", "Неверные учетные данные пользователя", LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
+    /**
+     * Обрабатывает исключения безопасности.
+     * Вызывается когда пользователь не имеет прав доступа к ресурсу.
+     *
+     * @param ex исключение SecurityException
+     * @return ResponseEntity с объектом ErrorResponse и статусом HTTP 403 (Forbidden)
+     */
+    @ExceptionHandler(SecurityException.class)
+    public ResponseEntity<ErrorResponse> handleSecurityException(SecurityException ex) {
+        var error = new ErrorResponse("FORBIDDEN", ex.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
 
 }
