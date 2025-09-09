@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 009-create-card-action-requests
+      author: denis
+      changes:
+        - createTable:
+            tableName: card_action_requests
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: card_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: action_type
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: processed_at
+                  type: TIMESTAMP
+        - addForeignKeyConstraint:
+            constraintName: fk_card_action_requests_card
+            baseTableName: card_action_requests
+            baseColumnNames: card_id
+            referencedTableName: cards
+            referencedColumnNames: id
+            onDelete: CASCADE
