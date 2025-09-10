@@ -52,9 +52,12 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public CardResponse getCardById(UUID id) {
+    public CardResponse getCardById(UUID id, boolean showFullNumber) {
         Card card = cardRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Карта не найдена с ID: " + id));
+        if (showFullNumber) {
+            return cardMapper.toCardResponseFull(card);
+        }
         return cardMapper.toCardResponse(card);
     }
 

@@ -25,6 +25,17 @@ public interface CardMapper {
     CardResponse toCardResponse(Card card);
 
     /**
+     * Преобразует карту в ответ без маскирования (открытый номер карты).
+     *
+     * @param card сущность карты
+     * @return DTO с полным номером карты
+     */
+    @Mapping(target = "maskedCardNumber", source = "cardNumber")
+    @Mapping(target = "userId", source = "owner.id")
+    @Mapping(target = "userFullName", source = "owner.fullName")
+    CardResponse toCardResponseFull(Card card);
+
+    /**
      * Маскирует номер карты, оставляя только последние 4 цифры.
      *
      * @param cardNumber исходный номер карты

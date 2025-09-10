@@ -42,7 +42,7 @@ public interface CardService {
      * @param id идентификатор карты
      * @return данные карты
      */
-    CardResponse getCardById(UUID id);
+    CardResponse getCardById(UUID id, boolean showFullNumber);
 
     /**
      * Создает новую карту.

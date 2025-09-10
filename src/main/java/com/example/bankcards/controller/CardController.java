@@ -54,9 +54,11 @@ public class CardController {
 
     @Operation(summary = "Получить карту по ID (доступно владельцу карты или ADMIN)")
     @GetMapping("/{id}")
-    public CardResponse getCard(@PathVariable UUID id) {
-        CardResponse card = cardService.getCardById(id);
-
+    public CardResponse getCard(
+            @PathVariable UUID id,
+            @RequestParam(defaultValue = "false") boolean showFullNumber
+    ) {
+        CardResponse card = cardService.getCardById(id, showFullNumber);
         if (!authUtils.isCardOwnerOrAdmin(card.getUserId())) {
             throw new SecurityException("Доступ запрещен: вы не являетесь владельцем этой карты");
         }
