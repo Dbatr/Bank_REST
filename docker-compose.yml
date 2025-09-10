@@ -5,7 +5,7 @@ services:
     image: postgres:17
     container_name: bankcards-postgres
     ports:
-      - "5433:5432"
+      - "5432:5432"
     environment:
       - POSTGRES_DB=${BANK_DB_NAME}
       - POSTGRES_USER=${BANK_DB_USER}
@@ -17,6 +17,27 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bankcards-app
+    ports:
+      - "8080:8080"
+    environment:
+      - BANK_DB_URL=${BANK_DB_URL}
+      - BANK_DB_NAME=${BANK_DB_NAME}
+      - BANK_DB_USER=${BANK_DB_USER}
+      - BANK_DB_PASSWORD=${BANK_DB_PASSWORD}
+      - APP_CRYPTO_KEY=${APP_CRYPTO_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - app-network
 
